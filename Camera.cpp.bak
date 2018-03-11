@@ -1,0 +1,178 @@
+#include <cassert>
+#include <cmath>
+#include "algebra3.h"
+#include "Camera.h"
+
+Camera::Camera(void)
+{
+  _camera_vector = vec4(0,0,6,0);
+  _up_vector = vec4(0,1,0,0);
+}
+
+Camera::Camera(const vec4& cameraVector, const vec4& upVector)
+: _camera_vector(cameraVector),
+  _up_vector(upVector)
+{
+}
+
+void Camera::setCameraVector(const vec4& cameraVector)
+{
+  _camera_vector = cameraVector;
+  return;
+}
+
+void Camera::setUpVector(const vec4& upVector)
+{
+  _up_vector = upVector;
+  return;
+}
+
+void Camera::AdjustHorizontalView(double degree)
+{
+  _camera_vector = rotation3D(_up_vector, degree, _camera_vector) * _camera_vector;
+  return;
+}
+
+void Camera::AdjustVerticalView(double degree)
+{
+  vec3 Axis = vec3(_up_vector) ^ vec3(_camera_vector);
+  _camera_vector = rotation3D(Axis, degree, _camera_vector) * _camera_vector;
+  //_up_vector = rotation3D(Axis, degree, _up_vector) * _up_vector;
+  _up_vector = vec4(vec3(_camera_vector) ^ Axis, 0);
+  return;
+}
+
+void Camera::AdjustZoom(double scale)
+{
+  _camera_vector = scale * _camera_vector;
+  return;
+}
+
+vec4 Camera::getCameraVector(void) const
+{
+  return _camera_vector;
+}
+
+vec4 Camera::getUpVector(void) const
+{
+  return _up_vector;
+}
+
+mat4 Camera::getCameraMatrix(void) const
+{
+  //start with identity matrix;
+  mat4 tmat = identity3D();
+  
+  // Test 1
+  /*
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    for (unsigned int j = 0; j < 4; ++j)
+      std::cout << tmat[i][j] << ' ';
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+  */
+
+  //push the world along the view direction;
+  tmat = translation3D(-1 * _camera_vector);
+  // Test 2
+  /*
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    for (unsigned int j = 0; j < 4; ++j)
+      std::cout << tmat[i][j] << ' ';
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+  */
+  //rotate zold to znew. znew is the cameraVector.
+
+  vec4 zold = vec4(0,0,1,0);
+  vec4 znew = _camera_vector;
+  assert(abs(znew[3]) < 0.1);
+  vec3 zRotateAxis = vec3(znew) ^ vec3(zold);
+
+  // Test 3
+  /*
+  std::cout << "zRotateAxis:" << std:: endl;
+  for (unsigned int i = 0; i < 3; ++i)
+    std::cout << zRotateAxis[i] << ' ';
+  std::cout << std::endl;
+  std::cout << std::endl;
+  */
+
+
+  double zangle = acos((zold*znew)/zold.length()/znew.length());
+  // Test 3.5
+  /*
+  std::cout << "zangle: " << zangle*180/3.14159 << std::endl;
+  */
+
+  mat4 zRotation = rotation3D(zRotateAxis, zangle/3.14159*180,vec3(znew));
+
+  // Test 4
+  /*
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    for (unsigned int j = 0; j < 4; ++j)
+      std::cout << zRotation[i][j] << ' ';
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+  */
+
+  tmat =zRotation * tmat;
+  //rotate yold to ynew. ynew is the up vector.
+
+  //vec4 yold = zRotation * vec4(0,1,0,0);
+  //vec4 yold = rotation3D(zRotateAxis, zangle/3.14159*180,vec3(znew)) * vec4(0,1,0,0);
+  vec4 yold = vec4(0,1,0,0);
+  vec4 ynew = zRotation * _up_vector;
+  //vec4 ynew = _up_vector;
+  // Test 4.5
+  /*
+  for (unsigned int i = 0; i < 4; ++i)
+    std::cout << yold[i] << ' ';
+  std::cout << std::endl;
+  
+  for (unsigned int i = 0; i < 4; ++i)
+    std::cout << ynew[i] << ' ';
+  std::cout << std::endl;
+  */
+  vec3 yRotateAxis = vec3(ynew) ^ vec3(yold);
+  // Test 5
+  /*
+  for (unsigned int i = 0; i < 3; ++i)
+    std::cout << yRotateAxis[i] << ' ';
+  std::cout << std::endl;
+  std::cout << std::endl;
+  */
+  // double yangle = asin(yRotateAxis.length()/yold.length()/ynew.length());
+  double yangle = acos((yold*ynew)/yold.length()/ynew.length());
+  mat4 yRotation = rotation3D(yRotateAxis, yangle/3.14159*180,vec3(ynew));
+  // Test 6
+  /*
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    for (unsigned int j = 0; j < 4; ++j)
+      std::cout << yRotation[i][j] << ' ';
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+  */
+  
+  tmat = yRotation * tmat;
+  // Test 7
+  /* 
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    for (unsigned int j = 0; j < 4; ++j)
+      std::cout << tmat[i][j] << ' ';
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+  */
+
+  return tmat;
+}

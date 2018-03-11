@@ -1,0 +1,96 @@
+#include <cassert>
+#include <cmath>
+#include "algebra3.h"
+#include "Camera.h"
+
+Camera::Camera(void)
+{
+  _camera_vector = vec4(0,0,6,0);
+  _up_vector = vec4(0,1,0,0);
+}
+
+Camera::Camera(const vec4& cameraVector, const vec4& upVector)
+: _camera_vector(cameraVector),
+  _up_vector(upVector)
+{
+}
+
+void Camera::setCameraVector(const vec4& cameraVector)
+{
+  _camera_vector = cameraVector;
+  return;
+}
+
+void Camera::setUpVector(const vec4& upVector)
+{
+  _up_vector = upVector;
+  return;
+}
+
+void Camera::AdjustHorizontalView(double degree)
+{
+  _camera_vector = rotation3D(_up_vector, degree, _camera_vector) * _camera_vector;
+  return;
+}
+
+void Camera::AdjustVerticalView(double degree)
+{
+  vec3 Axis = vec3(_up_vector) ^ vec3(_camera_vector);
+  _camera_vector = rotation3D(Axis, degree, _camera_vector) * _camera_vector;
+  //_up_vector = rotation3D(Axis, degree, _up_vector) * _up_vector;
+  _up_vector = vec4(vec3(_camera_vector) ^ Axis, 0);
+  return;
+}
+
+void Camera::AdjustZoom(double scale)
+{
+  _camera_vector = scale * _camera_vector;
+  return;
+}
+
+vec4 Camera::getCameraVector(void) const
+{
+  return _camera_vector;
+}
+
+vec4 Camera::getUpVector(void) const
+{
+  return _up_vector;
+}
+
+mat4 Camera::getCameraMatrix(void) const
+{
+  //start with identity matrix;
+  mat4 tmat = identity3D();
+
+  vec3 viewVector = -1 * vec3(_camera_vector);
+  mat4 tlmat = translation3D(viewVector);
+  viewVector.normalize();
+  vec3 upVector = vec3(_up_vector);
+  upVector.normalize();
+  vec3 s = viewVector ^ upVector;
+  vec3 u = s ^ viewVector;
+  mat4 trans = mat4(
+    vec4(s[0],s[1],s[2],0),
+    vec4(u[0],u[1],u[2],0),
+    vec4(-viewVector[0],-viewVector[1],-viewVector[2],0),
+    vec4(0,0,0,1));
+  /*
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    for (unsigned int j = 0; j < 4; ++j)
+      std::cout << trans[i][j] << ' ';
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+  
+  for (unsigned int i = 0; i < 4; ++i)
+  {
+    for (unsigned int j = 0; j < 4; ++j)
+      std::cout << tlmat[i][j] << ' ';
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+  */
+  return trans * tlmat;
+}
