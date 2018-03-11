@@ -3,4 +3,5 @@
 moc_*
 ui_*.h
 MakeFile
-
+.qmake.stash
+/upenn-cis277-10sp.app/

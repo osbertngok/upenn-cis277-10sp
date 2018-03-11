@@ -3,4 +3,5 @@ rm ui_*
 rm *.o
 rm Makefile
 rm *.pro
-rm final_project_public
+rm ./upenn-cis277-10sp.app
+
