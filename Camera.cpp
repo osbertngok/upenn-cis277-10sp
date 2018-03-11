@@ -1,6 +1,6 @@
 #include <cassert>
 #include <cmath>
-#include <QtOpenGL>
+#include <QtGui>
 #include "algebra3.h"
 #include "Camera.h"
 

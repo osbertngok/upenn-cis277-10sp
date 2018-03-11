@@ -1,0 +1,6 @@
+*.o
+*.pro
+moc_*
+ui_*.h
+MakeFile
+

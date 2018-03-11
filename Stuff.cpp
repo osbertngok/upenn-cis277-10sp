@@ -1,4 +1,4 @@
-#include <QtOpenGL>
+#include <QtGui>
 #include <iostream>
 #include <map>
 #include <string>

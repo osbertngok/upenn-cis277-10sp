@@ -1,15 +1,15 @@
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMessageBox>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QWidget>
-#include <QtGui/QDialog>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QDialog>
 #include <iostream>
 
 #include "Dialogs.h"
@@ -18,7 +18,7 @@
 using std::cout;
 using std::endl;
 
-ColorSelectionDialog::ColorSelectionDialog(QWidget *parent, Qt::WFlags flags)
+ColorSelectionDialog::ColorSelectionDialog(QWidget *parent, Qt::WindowFlags flags)
 	: QDialog(parent, flags)
 {
 	ui.setupUi(this);
@@ -29,7 +29,7 @@ ColorSelectionDialog::~ColorSelectionDialog()
 
 }
 
-PositionDialog::PositionDialog(QWidget *parent, Qt::WFlags flags)
+PositionDialog::PositionDialog(QWidget *parent, Qt::WindowFlags flags)
 	: QDialog(parent, flags)
 {
 	ui.setupUi(this);
@@ -50,7 +50,7 @@ void PositionDialog::init()
   return;
 }
 
-SplitVertexDialog::SplitVertexDialog(QWidget *parent, Qt::WFlags flags)
+SplitVertexDialog::SplitVertexDialog(QWidget *parent, Qt::WindowFlags flags)
 	: QDialog(parent, flags)
 {
 	ui.setupUi(this);
@@ -61,7 +61,7 @@ SplitVertexDialog::~SplitVertexDialog()
 
 }
 
-SplitQuadDialog::SplitQuadDialog(QWidget *parent, Qt::WFlags flags)
+SplitQuadDialog::SplitQuadDialog(QWidget *parent, Qt::WindowFlags flags)
 	: QDialog(parent, flags)
 {
 	ui.setupUi(this);

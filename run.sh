@@ -1,4 +1,5 @@
-qmake -project
+qmake -project "QT += widgets opengl"
 qmake
 make
-./homework7
+./final1.app/Contents/MacOS/final1
+

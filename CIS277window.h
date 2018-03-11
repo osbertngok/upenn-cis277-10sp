@@ -3,7 +3,7 @@
 #ifndef CIS277WINDOW_H
 #define CIS277WINDOW_H
 
-#include <QtGui/QMainWindow>
+#include <QtWidgets/QMainWindow>
 #include "ui_cis277_3d.h"
 #include "Camera.h"
 #include "Stuff.h"
@@ -14,7 +14,7 @@ class CIS277window : public QMainWindow
 	Q_OBJECT
 
 public:
-	CIS277window(QWidget *parent = 0, Qt::WFlags flags = 0);
+	CIS277window(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~CIS277window();
 
   void init();

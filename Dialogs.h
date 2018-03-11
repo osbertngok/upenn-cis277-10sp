@@ -2,7 +2,7 @@
 #ifndef _DIALOGS_H_
 #define _DIALOGS_H_
 
-#include <QtGui/QDialog>
+#include <QtWidgets/QDialog>
 #include "ui_colorSelection.h"
 #include "ui_positionSelection.h"
 #include "ui_splitVertex.h"
@@ -15,7 +15,7 @@ class ColorSelectionDialog : public QDialog
 	Q_OBJECT
 
 public:
-	ColorSelectionDialog(QWidget *parent = 0, Qt::WFlags flags = 0);
+	ColorSelectionDialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~ColorSelectionDialog();
 
 private:
@@ -28,7 +28,7 @@ class PositionDialog : public QDialog
 	Q_OBJECT
 
 public:
-	PositionDialog(QWidget *parent = 0, Qt::WFlags flags = 0);
+	PositionDialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~PositionDialog();
   void init();
 
@@ -42,7 +42,7 @@ class SplitVertexDialog : public QDialog
 	Q_OBJECT
 
 public:
-	SplitVertexDialog(QWidget *parent = 0, Qt::WFlags flags = 0);
+	SplitVertexDialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~SplitVertexDialog();
 
 private:
@@ -55,7 +55,7 @@ class SplitQuadDialog : public QDialog
 	Q_OBJECT
 
 public:
-	SplitQuadDialog(QWidget *parent = 0, Qt::WFlags flags = 0);
+	SplitQuadDialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~SplitQuadDialog();
 
 private:

@@ -45,11 +45,11 @@ CorrFace(CFace),
 _window(window)
 {
   setObjectName(QString::fromUtf8(("Face "+to_string(CFace->getId())).c_str()));
-  setTitle(QApplication::translate("CIS277window", ("Face "+to_string(CFace->getId())).c_str(), 0, QApplication::UnicodeUTF8));
+  setTitle(QApplication::translate("CIS277window", ("Face "+to_string(CFace->getId())).c_str(), 0));
 
   QAction* changeColor = new QAction(this);
   changeColor->setObjectName(QString::fromUtf8("changeColor"));
-  changeColor->setText(QApplication::translate("CIS277window","Change Color", 0, QApplication::UnicodeUTF8));
+  changeColor->setText(QApplication::translate("CIS277window","Change Color", 0));
   addAction(changeColor);
   QObject::connect(changeColor, SIGNAL(triggered()), _window, SLOT(faceColorHandler()));
 }
@@ -106,19 +106,19 @@ CorrVertex(CVertex),
 _window(window)
 {
   setObjectName(QString::fromUtf8(("Vertex "+to_string(CVertex->getId())).c_str()));
-  setTitle(QApplication::translate("CIS277window", ("Vertex "+to_string(CVertex->getId())).c_str(), 0, QApplication::UnicodeUTF8));
+  setTitle(QApplication::translate("CIS277window", ("Vertex "+to_string(CVertex->getId())).c_str(), 0));
 
   //change Coordinate
   QAction* changeCoordinate = new QAction(this);
   changeCoordinate->setObjectName(QString::fromUtf8("changeCoordinate"));
-  changeCoordinate->setText(QApplication::translate("CIS277window","Change Coordinate", 0, QApplication::UnicodeUTF8));
+  changeCoordinate->setText(QApplication::translate("CIS277window","Change Coordinate", 0));
   addAction(changeCoordinate);
   QObject::connect(changeCoordinate, SIGNAL(triggered()), _window, SLOT(vertexCoordinateHandler()));
 
   //delete Vertex
   QAction* delVertex = new QAction(this);
   delVertex->setObjectName(QString::fromUtf8("delVertex"));
-  delVertex->setText(QApplication::translate("CIS277window","Delete", 0, QApplication::UnicodeUTF8));
+  delVertex->setText(QApplication::translate("CIS277window","Delete", 0));
   addAction(delVertex);
   QObject::connect(delVertex, SIGNAL(triggered()), _window, SLOT(vertexDeletionHandler()));
 }
@@ -174,12 +174,12 @@ CorrHalfEdge(CHalfEdge),
 _window(window)
 {
   setObjectName(QString::fromUtf8(("HalfEdge "+to_string(CHalfEdge->getId())).c_str()));
-  setTitle(QApplication::translate("CIS277window", ("HalfEdge "+to_string(CHalfEdge->getId())).c_str(), 0, QApplication::UnicodeUTF8));
+  setTitle(QApplication::translate("CIS277window", ("HalfEdge "+to_string(CHalfEdge->getId())).c_str(), 0));
 
   //addVertex
   QAction* addVertex = new QAction(this);
   addVertex->setObjectName(QString::fromUtf8("addVertex"));
-  addVertex->setText(QApplication::translate("CIS277window","Add Vertex", 0, QApplication::UnicodeUTF8));
+  addVertex->setText(QApplication::translate("CIS277window","Add Vertex", 0));
   addAction(addVertex);
   QObject::connect(addVertex, SIGNAL(triggered()), _window, SLOT(addVertexHandler()));
 
@@ -188,7 +188,7 @@ _window(window)
   {
     QAction* fillFace = new QAction(this);
     fillFace->setObjectName(QString::fromUtf8("fillFace"));
-    fillFace->setText(QApplication::translate("CIS277window","Fill Face", 0, QApplication::UnicodeUTF8));
+    fillFace->setText(QApplication::translate("CIS277window","Fill Face", 0));
     addAction(fillFace);
     QObject::connect(fillFace, SIGNAL(triggered()), _window, SLOT(fillFaceHandler()));
   }

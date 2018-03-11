@@ -1,16 +1,16 @@
 /* the main window.  not much to do here.  */
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMessageBox>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QWidget>
 #include <iostream>
 
 #include "CIS277window.h"
@@ -23,7 +23,7 @@
 using std::cout;
 using std::endl;
 
-CIS277window::CIS277window(QWidget *parent, Qt::WFlags flags)
+CIS277window::CIS277window(QWidget *parent, Qt::WindowFlags flags)
 	: QMainWindow(parent, flags)
 {
 	ui.setupUi(this);
@@ -44,12 +44,12 @@ void CIS277window::init()
   //File Menu
   M_File = new QMenu(QMB);
   M_File->setObjectName(QString::fromUtf8("File"));
-  M_File->setTitle(QApplication::translate("CIS277window", "&File", 0, QApplication::UnicodeUTF8));
+  M_File->setTitle(QApplication::translate("CIS277window", "&File", 0));
   QMB->addAction(M_File->menuAction());
 
   QAction* A_File_Exit = new QAction(this);
   A_File_Exit->setObjectName(QString::fromUtf8("action_File_Exit"));
-  A_File_Exit->setText(QApplication::translate("CIS277window","E&xit", 0, QApplication::UnicodeUTF8));
+  A_File_Exit->setText(QApplication::translate("CIS277window","E&xit", 0));
   M_File->addAction(A_File_Exit);
   QObject::connect(A_File_Exit, SIGNAL(triggered()), this, SLOT(close()));
   M_File_vec.push_back(A_File_Exit);
@@ -57,7 +57,7 @@ void CIS277window::init()
   //Preset Menu
   M_Preset = new QMenu(QMB);
   M_Preset->setObjectName(QString::fromUtf8("Preset"));
-  M_Preset->setTitle(QApplication::translate("CIS277window", "&Preset", 0, QApplication::UnicodeUTF8));
+  M_Preset->setTitle(QApplication::translate("CIS277window", "&Preset", 0));
   QMB->addAction(M_Preset->menuAction());
 
   //More Actions in Preset Menu
@@ -66,7 +66,7 @@ void CIS277window::init()
   {
     QAction* QA = new QAction(this);
     QA->setObjectName(QString::fromUtf8(("action_Preset_"+to_string(i)).c_str()));
-    QA->setText(QApplication::translate("CIS277window", ("Cube: Level "+to_string(i)).c_str(), 0, QApplication::UnicodeUTF8));
+    QA->setText(QApplication::translate("CIS277window", ("Cube: Level "+to_string(i)).c_str(), 0));
     M_Preset->addAction(QA);
     M_Preset_vec.push_back(QA);
 
@@ -84,38 +84,38 @@ void CIS277window::init()
 
   M_Faces = new Q_Face_List_Menu(QMB,this);
   M_Faces->setObjectName(QString::fromUtf8("Faces"));
-  M_Faces->setTitle(QApplication::translate("CIS277window", "&Faces", 0, QApplication::UnicodeUTF8));
+  M_Faces->setTitle(QApplication::translate("CIS277window", "&Faces", 0));
   QMB->addAction(M_Faces->menuAction());
 
   // Vertices Menu
 
   M_Vertices = new Q_Vertex_List_Menu(QMB,this);
   M_Vertices->setObjectName(QString::fromUtf8("Vertices"));
-  M_Vertices->setTitle(QApplication::translate("CIS277window", "&Vertices", 0, QApplication::UnicodeUTF8));
+  M_Vertices->setTitle(QApplication::translate("CIS277window", "&Vertices", 0));
   QMB->addAction(M_Vertices->menuAction());
 
   // HalfEdges Menu
 
   M_HalfEdges = new Q_HalfEdge_List_Menu(QMB,this);
   M_HalfEdges->setObjectName(QString::fromUtf8("HalfEdges"));
-  M_HalfEdges->setTitle(QApplication::translate("CIS277window", "&HalfEdges", 0, QApplication::UnicodeUTF8));
+  M_HalfEdges->setTitle(QApplication::translate("CIS277window", "&HalfEdges", 0));
   QMB->addAction(M_HalfEdges->menuAction());
 
   //Others Functions Menu
   M_Others = new QMenu(QMB);
   M_Others->setObjectName(QString::fromUtf8("Others"));
-  M_Others->setTitle(QApplication::translate("CIS277window", "&Others", 0, QApplication::UnicodeUTF8));
+  M_Others->setTitle(QApplication::translate("CIS277window", "&Others", 0));
   QMB->addAction(M_Others->menuAction());
 
   QAction* A_Split_Vertex = new QAction(this);
   A_Split_Vertex->setObjectName(QString::fromUtf8("action_Split_Vertex"));
-  A_Split_Vertex->setText(QApplication::translate("CIS277window","Split Vertex into Two...", 0, QApplication::UnicodeUTF8));
+  A_Split_Vertex->setText(QApplication::translate("CIS277window","Split Vertex into Two...", 0));
   M_Others->addAction(A_Split_Vertex);
   QObject::connect(A_Split_Vertex, SIGNAL(triggered()), this, SLOT(splitVertexHandler()));
 
   QAction* A_Split_Quad = new QAction(this);
   A_Split_Quad->setObjectName(QString::fromUtf8("action_Split_Quad"));
-  A_Split_Quad->setText(QApplication::translate("CIS277window","Split Quad into Two...", 0, QApplication::UnicodeUTF8));
+  A_Split_Quad->setText(QApplication::translate("CIS277window","Split Quad into Two...", 0));
   M_Others->addAction(A_Split_Quad);
   QObject::connect(A_Split_Quad, SIGNAL(triggered()), this, SLOT(splitQuadHandler()));
   return;
@@ -140,7 +140,7 @@ void CIS277window::faceColorHandler()
   int G = int(Color[1]*100);
   int B = int(Color[2]*100);
   ColorSelectionDialog CSD(this);
-  CSD.setWindowTitle(QApplication::translate("ColorDialog", ("Color of Face "+to_string(f->getId())).c_str(), 0, QApplication::UnicodeUTF8));
+  CSD.setWindowTitle(QApplication::translate("ColorDialog", ("Color of Face "+to_string(f->getId())).c_str(), 0));
 
   //Sliders
   CSD.ui.RSlider->setMinimum(0);
@@ -170,7 +170,7 @@ void CIS277window::vertexCoordinateHandler()
   int Y = int(v->getY()*10);
   int Z = int(v->getZ()*10);
   PositionDialog PD(this);
-  PD.setWindowTitle(QApplication::translate("PositionDialog", ("Position of Vertex "+to_string(v->getId())).c_str(), 0, QApplication::UnicodeUTF8));
+  PD.setWindowTitle(QApplication::translate("PositionDialog", ("Position of Vertex "+to_string(v->getId())).c_str(), 0));
 
   //Sliders
   PD.ui.XSlider->setMinimum(-50);

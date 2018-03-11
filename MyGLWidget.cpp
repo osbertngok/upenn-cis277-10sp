@@ -10,7 +10,6 @@
 #include "MyGLWidget.h"
 #include <iostream>
 #include <QtGui>
-#include <QtOpenGL>
 
 using std::cout;
 using std::endl;

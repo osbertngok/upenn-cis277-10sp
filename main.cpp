@@ -6,7 +6,7 @@
 */
 
 #include "CIS277window.h"
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 using std::cout;
 using std::endl;
 
